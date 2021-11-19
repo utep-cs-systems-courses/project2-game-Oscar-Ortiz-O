@@ -3,6 +3,7 @@
 #include "led.h"
 #include "switch.h"
 #include "buzzer.h"
+#include "states.h"
 
 void switch_init() 
 {  
@@ -11,6 +12,11 @@ void switch_init()
   P2OUT |= SWITCHES;		/* pull-ups for switches */
   P2DIR &= ~SWITCHES;		/* set switches' bits for input */
 } 
+
+int activateOne = 0;
+int activateTwo = 0;
+int activateThree = 0;
+int activateFour = 0;
 
 int pressedSW1 = 0;
 int pressedSW2 = 0;
@@ -33,20 +39,34 @@ switch_interrupt_handler()
   pressedSW4 = (p2val & SW4) ? 0 : 1;
 
   if (pressedSW1) {
-    P1OUT |= LED_RED;
-    P1OUT &= ~LED_GREEN;
-    buzzer_set_period(500);
+    activateOne = 1;
+    activateTwo = 0;
+    activateThree = 0;
+    activateFour = 0;
 
   } else if (pressedSW2) {
-    P1OUT |= LED_GREEN;
-    P1OUT &= ~LED_RED;
-    buzzer_set_period(1000);
+    activateOne = 0;
+    activateTwo = 1;
+    activateThree = 0;
+    activateFour = 0;
 
   } else if (pressedSW3) {
-    buzzer_set_period(1500);
+    activateOne = 0;
+    activateTwo = 0;
+    activateThree = 1;
+    activateFour = 0;
 
   } else if (pressedSW4) {
-    buzzer_set_period(0);
+    activateOne = 0;
+    activateTwo = 0;
+    activateThree = 0;
+    activateFour = 1;
+    
+  } else {
+    activateOne = 0;
+    activateTwo = 0;
+    activateThree = 0;
+    activateFour = 0;
   }
 }
 

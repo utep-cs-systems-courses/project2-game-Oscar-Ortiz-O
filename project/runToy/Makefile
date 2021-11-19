@@ -11,7 +11,7 @@ AS              = msp430-elf-as
 all: runToy.elf 
 
 #additional rules for files
-runToy.elf: ${COMMON_OBJECTS} interruptHandler.o switch.o buzzer.o ../lib/libTimer.a
+runToy.elf: ${COMMON_OBJECTS} interruptHandler.o switch.o buzzer.o states.o ../lib/libTimer.a
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
 load: runToy.elf
@@ -22,3 +22,4 @@ clean:
 
 buzzer.c: buzzer.h
 switch.c: switch.h
+states.c: states.h
