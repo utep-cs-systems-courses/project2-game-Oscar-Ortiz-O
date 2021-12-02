@@ -5,6 +5,7 @@
 #include "states.h"
 #include "buzzer.h"
 #include "switch.h"
+#include "blinker.h"
 
 int counter = 0;
 int main_state = 0;
@@ -48,7 +49,7 @@ __interrupt_vec(WDT_VECTOR) WDT()	/* 250 interrupts/sec */
 
   } else if (activateTwo) {
     playToggle = 0;
-    buzzer_set_period(1000);
+    dimBoth50(fast_state);
 
   } else if (activateThree) {
     playToggle = 1;
